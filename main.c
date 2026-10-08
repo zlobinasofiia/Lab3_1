@@ -2,16 +2,19 @@
 #include <stdlib.h>
 #include <math.h>
 
+//Функція Ф(х)
 double f(double x)
 {
     return 0.4 * pow(x -100, 3) + 3.0 *pow(x, 2) - 0.2 * x + 200;
 }
 
+//Перша похідна функція ф(х)
 double df(double x)
 {
     return 1.2 * pow(x - 100, 2) + 6.0 * x - 0.2;
 }
 
+//Введення початкових даних
 void inputData(double *x1, double *x2, double *delta, unsigned int *N)
 {
     int variant = 0;
@@ -73,6 +76,7 @@ void inputData(double *x1, double *x2, double *delta, unsigned int *N)
     }
 }
 
+//Таблиця значень функції
 void printFunctionTable(double x1, double delta, unsigned int N)
 {
   printf("\n");
@@ -91,6 +95,7 @@ void printFunctionTable(double x1, double delta, unsigned int N)
     }
 }
 
+//Таблиця значень похідної
 void printDerivativeTable(double x1, double delta, unsigned int N)
 {
     printf("\n");
@@ -109,6 +114,47 @@ void printDerivativeTable(double x1, double delta, unsigned int N)
     }
 }
 
+//Пощук проміжків ізоляції коренів
+void findRoots(double x1, double delta, unsigned int N)
+{
+    double previousX = x1;
+    double previousY = f(x1);
+
+    int rootFound = 0;
+
+    printf("\n");
+    printf("=======================================================\n");
+    printf("|            PROMIZHKY IZOLYATSII KORENIV            |\n");
+    printf("=======================================================\n");
+
+    for (unsigned int i = 2; i <= N; i++)
+    {
+        double x = x1 + (i - 1)* delta;
+        double y = f(x);
+
+        //Перевірка зміни знаку
+        if(previousY * y <= 0)
+        {
+        // Якщо знак змінився, знайдено проміжок ізоляції
+         printf("| Korin: [%.2lf ; %.2lf]                |\n", previousX, x);
+
+         rootFound = 1;
+        }
+
+        // Збереження поточних значень для наступної перевірки
+        previousX = x;
+        previousY = y;
+    }
+
+    if(rootFound == 0)
+    {
+      printf("| Koreni na zadanoomu intervali ne znaydeni.       |\n");
+    }
+
+    printf("=======================================================\n");
+}
+
+//Головна функція
 int main()
 {
     double x1;
@@ -134,6 +180,8 @@ int main()
     printFunctionTable(x1, delta, N);
 
     printDerivativeTable(x1, delta, N);
+
+    findRoots(x1, delta, N);
 
     return 0;
 }
