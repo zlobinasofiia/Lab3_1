@@ -73,6 +73,42 @@ void inputData(double *x1, double *x2, double *delta, unsigned int *N)
     }
 }
 
+void printFunctionTable(double x1, double delta, unsigned int N)
+{
+  printf("\n");
+    printf("=======================================================\n");
+    printf("|  N  |        X        |          F(X)              |\n");
+    printf("=======================================================\n");
+
+    for (unsigned int i = 1; i <= N; i++)
+    {
+        double x = x1 + (i -1) * delta;
+        double y = f(x);
+
+        printf("| %u3 | %14.2lf | %24.2lf |\n", i, x, y);
+
+        printf("-------------------------------------------------------\n");
+    }
+}
+
+void printDerivativeTable(double x1, double delta, unsigned int N)
+{
+    printf("\n");
+    printf("=======================================================\n");
+    printf("|  N  |        X        |         F'(X)              |\n");
+    printf("=======================================================\n");
+
+    for(unsigned int i = 1; i <= N; i++)
+    {
+        double x = x1 + (i - 1)* delta;
+        double y = df(x);
+
+        printf("| %3u | %14.2lf | %24.2lf |\n", i, x, y);
+
+        printf("-------------------------------------------------------\n");
+    }
+}
+
 int main()
 {
     double x1;
@@ -94,4 +130,10 @@ int main()
     printf("\nX2    = %.2lf", x2);
     printf("\nN     = %u", N);
     printf("\ndelta = %.2lf\n", delta);
+
+    printFunctionTable(x1, delta, N);
+
+    printDerivativeTable(x1, delta, N);
+
+    return 0;
 }
